@@ -1,0 +1,135 @@
+@use "../custom" as *;
+
+#admin {
+  display: flex;
+  background: linear-gradient(180deg, $gray-100 0%, $white 100%);
+  color: $dark;
+  min-height: 100vh;
+
+  .dash-link-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding-top: 1rem;
+
+    .dash-link {
+      background: $white;
+      color: $accent;
+      flex: 1 1 200px;
+      height: 180px;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      border-radius: 20px;
+      box-shadow: 0 6px 12px rgba($black, 0.1);
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: all 0.3s ease-in-out;
+      position: relative;
+      overflow: hidden;
+
+      i {
+        font-size: 2rem;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba($accent, 0.05);
+        transform: scale(0);
+        border-radius: inherit;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      &:hover {
+        color: darken($accent, 10%);
+        transform: translateY(-8px);
+        box-shadow: 0 10px 16px rgba($black, 0.15);
+
+        i {
+          transform: scale(1.1);
+        }
+
+        &::after {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+
+  h1, h4 {
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: darken($accent, 10%);
+  }
+}
+
+main {
+    flex: 1;
+    margin-left: 120px;
+    padding: 2rem;
+    transition: margin-left 0.5s ease;
+
+    // #sidebar:hover + & {
+    //     margin-left: 240px;
+    // }
+
+    h1 {
+        font-weight: 700;
+        margin-bottom: 2rem;
+    }
+
+    // Scroll behavior
+    overflow-y: auto;
+    max-height: 100vh;
+}
+
+.stats-container {
+  .stat-card {
+    background: $white;
+    border-radius: 15px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 16px rgba($black, 0.15);
+    }
+
+    i {
+      opacity: 0.8;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    &:hover i {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+  }
+}
+
+.toast-container {
+  .toast {
+    border-radius: 12px;
+    font-weight: 600;
+    opacity: 0.95;
+    animation: fadeIn 0.5s ease-in-out;
+
+    i {
+      font-size: 1.1rem;
+    }
+
+    &.text-bg-success {
+      background: linear-gradient(90deg, lighten($accent, 10%), $accent);
+    }
+  }
+}
+
+input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+}

@@ -1,0 +1,13 @@
+@use "./custom";
+
+// Import the page styles
+@use "./pages/admin";
+@use "./pages/login";
+
+// Import the component styles
+@use "./components/sidebar";
+@use "./components/table";
+@use "./components/forms";
+@use "./components/spinner";
+@use "./components/animations";
+@use "./components/media";

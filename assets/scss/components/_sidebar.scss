@@ -1,0 +1,67 @@
+@use "../custom" as *;
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: 125px;
+  height: 100vh;
+  background: linear-gradient(180deg, $accent, darken($accent, 5%));
+  color: $white;
+  overflow: hidden;
+  transition: all 0.4s ease-in-out;
+  box-shadow: 3px 0 10px rgba($black, 0.1);
+  z-index: 10;
+
+  &:hover {
+    width: 240px;
+    .label { opacity: 1; transform: translateX(0); }
+  }
+
+  .logo {
+    position: relative;
+    margin: 1rem auto;
+    text-align: center;
+    img {
+      width: 80px;
+      border-radius: 50%;
+      border: 2px solid rgba($white, 0.8);
+      box-shadow: 0 4px 6px rgba($black, 0.2);
+    }
+  }
+
+  .menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+
+    li {
+      margin: 8px 0;
+      border-radius: 8px;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background: rgba($white, 0.1);
+        transform: scale(1.05);
+      }
+
+      &.active {
+        background: rgba($white, 0.2);
+        border-left: 4px solid $white;
+      }
+
+      a {
+        color: $white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1rem;
+        transition: color 0.3s ease-in-out;
+
+        i {
+          font-size: 1.3rem;
+        }
+      }
+    }
+  }
+}

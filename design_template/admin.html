@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="./static/css/fontawesome.css">
+    <link rel="stylesheet" href="./static/css/style.css">
+</head>
+
+<body id="admin">
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <img src="./static/images/logo.png" alt="">
+        </div>
+
+        <ul class="menu">
+            <li class="active">
+                <a href="./admin.html">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span class="label">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="./admin.html?request=user">
+                    <i class="fas fa-user"></i>
+                    <span class="label">Users</span>
+                </a>
+            </li>
+            <li>
+                <a href="./admin.html?request=courses">
+                    <i class="fas fa-book"></i>
+                    <span class="label">Courses</span>
+                </a>
+            </li>
+            <li>
+                <a href="./admin.html?request=faq">
+                    <i class="fas fa-question-circle"></i>
+                    <span class="label">FAQ</span>
+                </a>
+            </li>
+            <li class="logout">
+                <a href="#">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="label">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <main>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="display-6 m-0">Admin Dashboard</h1>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                <i class="fas fa-user-plus me-1"></i> Add New User
+            </button>
+        </div>
+
+        <div class="table-container">
+            <table class="table table-hover table-bordered table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Name</th>
+                        <th>Date Added</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rzr35x7</td>
+                        <td>Admin</td>
+                        <td>Nigel</td>
+                        <td>20 March 2025</td>
+                        <td class="actions">
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#editUserModal">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteUserModal">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <button class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                data-bs-target="#viewUserModal">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </td>
+                    <tr>
+                        <td>Chips35x7</td>
+                        <td>Admin</td>
+                        <td>Chiputura</td>
+                        <td>19 March 2025</td>
+                        <td class="actions">
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#editUserModal">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteUserModal">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <button class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                data-bs-target="#viewUserModal">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- 🧩 ADD USER MODAL -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" placeholder="Enter username">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" placeholder="Enter full name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Role</label>
+                            <select class="form-select">
+                                <option>Admin</option>
+                                <option>Instructor</option>
+                                <option>Student</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Save User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🧩 EDIT USER MODAL -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" value="Rzr35x7">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" value="Nigel">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Role</label>
+                            <select class="form-select">
+                                <option selected>Admin</option>
+                                <option>Instructor</option>
+                                <option>Student</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Update User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🧩 DELETE USER MODAL -->
+    <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteUserModalLabel">Delete User</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete <strong>Rzr35x7</strong>?</p>
+                    <div class="d-flex justify-content-end gap-2">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🧩 VIEW USER MODAL -->
+    <div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="viewUserModalLabel">User Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Username:</strong> Rzr35x7</li>
+                        <li class="list-group-item"><strong>Full Name:</strong> Nigel</li>
+                        <li class="list-group-item"><strong>Role:</strong> Admin</li>
+                        <li class="list-group-item"><strong>Date Added:</strong> 20 March 2025</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./static/js/sidebar.js"></script>
+    <script src="./static/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

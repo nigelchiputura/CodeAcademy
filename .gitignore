@@ -1,0 +1,4 @@
+assets/node_modules/
+design_template/node_modules/
+vendor/
+.env

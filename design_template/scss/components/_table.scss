@@ -1,0 +1,148 @@
+@use "../custom" as *;
+
+// Responsive wrapper
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; // smoother scroll on mobile
+  background: $white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba($black, 0.05);
+  margin-bottom: 2rem;
+
+  // Ensures scrollbars don't ruin layout
+  scrollbar-width: thin;
+  scrollbar-color: rgba($gray-400, 0.6) transparent;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($gray-400, 0.6);
+    border-radius: 10px;
+  }
+}
+
+// Table styling
+.table {
+  width: 100%;
+  min-width: 600px; // allows scroll on smaller devices
+  border-collapse: collapse;
+  font-size: 0.95rem;
+
+  thead {
+    background: rgba(113, 99, 186, 0.8);
+    color: $white;
+    th {
+      padding: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05rem;
+      border: none;
+      white-space: nowrap;
+    }
+  }
+
+  tbody {
+    tr {
+      &:hover {
+        background: rgba($gray-200, 0.3);
+      }
+    }
+
+    td {
+      padding: 0.9rem 1rem;
+      border-color: $gray-300;
+      color: $gray-800;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+  }
+
+  &.table-striped tbody tr:nth-of-type(odd) {
+    background: rgba($gray-200, 0.2);
+  }
+
+  &.table-bordered {
+    border: 1px solid $gray-300;
+  }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        justify-content: flex-start;
+        align-items: center;
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-sm {
+            padding: 0.3rem 0.6rem;
+        }
+    }   
+
+    @media (max-width: 768px) {
+        .actions {
+            flex-direction: column;
+            align-items: stretch;
+
+            .btn {
+            width: 100%;
+            justify-content: center;
+            }
+        }
+    }
+}
+
+// 🧩 RESPONSIVE BEHAVIOR
+// ----------------------
+
+// Tablets (≤ 992px)
+@media (max-width: 992px) {
+  .table {
+    font-size: 0.9rem;
+
+    thead th,
+    tbody td {
+      padding: 0.75rem;
+    }
+  }
+}
+
+// Large phones (≤ 768px)
+@media (max-width: 768px) {
+  .table {
+    font-size: 0.85rem;
+
+    th, td {
+      white-space: nowrap; // prevent text wrapping that breaks layout
+    }
+  }
+
+  .table-container {
+    border-radius: 8px;
+    box-shadow: none;
+  }
+}
+
+// Small phones (≤ 576px)
+@media (max-width: 576px) {
+  .table {
+    font-size: 0.8rem;
+    min-width: 480px; // ensures it scrolls horizontally
+
+    th,
+    td {
+      padding: 0.6rem;
+    }
+  }
+
+  .table-container {
+    margin-bottom: 1.5rem;
+  }
+}

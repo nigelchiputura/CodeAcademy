@@ -1,0 +1,26 @@
+{
+  "name": "bootstrap-v5",
+  "version": "1.0.0",
+  "description": "Build portfolio with bootstrap v5 and sass",
+  "keywords": [
+    "Bootstrap",
+    "bootstrap-v5",
+    "sass"
+  ],
+  "license": "ISC",
+  "author": "Nigel Chiputura",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "compile:sass":"sass --watch scss:static/css"
+  },
+  "devDependencies": {
+    "sass": "^1.89.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "autoprefixer": "^10.4.21",
+    "bootstrap": "^5.3.6",
+    "postcss-cli": "^11.0.1"
+  }
+}

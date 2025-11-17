@@ -1,0 +1,56 @@
+@use "../custom" as *;
+
+.form-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, $accent 0%, lighten($accent, 35%) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+
+  form {
+    background: $white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba($black, 0.15);
+    width: 100%;
+    max-width: 450px;
+    animation: fadeIn 0.8s ease-in-out;
+
+    h2, h1 {
+      color: $accent;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    input, button {
+      width: 100%;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      padding: 0.8rem;
+    }
+
+    button, input[type="submit"] {
+      background: $accent;
+      color: $white;
+      border: none;
+      transition: background 0.3s ease-in-out;
+
+      &:hover {
+        background: darken($accent, 10%);
+      }
+    }
+
+    a {
+      display: inline-block;
+      text-align: center;
+      color: $accent;
+      font-weight: 600;
+      transition: color 0.3s ease-in-out;
+      &:hover {
+        color: darken($accent, 10%);
+      }
+    }
+  }
+}

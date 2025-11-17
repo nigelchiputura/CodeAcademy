@@ -1,0 +1,8 @@
+@use "./custom";
+
+// Import the page styles
+@use "./pages/admin";
+
+// Import the component styles
+@use "./components/sidebar";
+@use "./components/table";

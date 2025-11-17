@@ -1,0 +1,43 @@
+@use '../custom' as *;
+
+@media (max-width: 992px) {
+  .table {
+    font-size: 0.9rem;
+
+    thead th,
+    tbody td {
+      padding: 0.75rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .table {
+    font-size: 0.85rem;
+
+    th, td {
+      white-space: nowrap; 
+    }
+  }
+
+  .table-container {
+    border-radius: 8px;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .table {
+    font-size: 0.8rem;
+    min-width: 480px;
+
+    th,
+    td {
+      padding: 0.6rem;
+    }
+  }
+
+  .table-container {
+    margin-bottom: 1.5rem;
+  }
+}
