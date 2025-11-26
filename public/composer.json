@@ -7,16 +7,10 @@
             "App\\": "app/"
         }
     },
-    "authors": [
-        {
-            "name": "Chips3507",
-            "email": "niggschiputura@gmail.com"
-        }
-    ],
-    "require": {
-        "ext-pdo": "*"
-    },
     "require": {
         "twilio/sdk": "^8.8"
+    },
+    "require": {
+        "ext-pdo": "*"
     }
 }

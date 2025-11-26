@@ -1,5 +1,10 @@
 <?php
 
+require_once("./config/db_con.php");
+require_once("./models/users/UserManager.php");
+
+$userManager = new UserManager($pdo);
+
 if (php_sapi_name() !== 'cli') {
     die("This script must be run from the command line.\n");
 }
@@ -8,11 +13,9 @@ require_once("./config/db_con.php");
 
 // Check if admin user already exists
 
-$query = "SELECT COUNT(*) FROM users WHERE role = 'admin'";
-$stmt = $pdo->prepare($query);
-$stmt->execute();
+$adminCount = $userManager->fetchAdminCount();
 
-if ($stmt->fetchColumn() > 0) 
+if ($adminCount > 0) 
     die("Admin user already exists.");
 
 // Get user input from CLI
