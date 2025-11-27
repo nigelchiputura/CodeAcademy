@@ -42,7 +42,7 @@ window.addEventListener('load', () => {
   document.getElementById('loading-spinner').classList.add('hidden');
 });
 </script>
-<script src="/public/assets/static/js/flashMessage.js"></script>
+<script src="/portal/assets/static/js/flashMessage.js"></script>
 
 </body>
 </html>

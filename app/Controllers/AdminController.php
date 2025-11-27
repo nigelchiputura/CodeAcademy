@@ -16,6 +16,7 @@ class AdminController
 
     public function dashboard()
     {
+        $users = $this->service->getAllUsers();
         require __DIR__ . '/../Views/admin/dashboard.php';
     }
 
@@ -38,7 +39,7 @@ class AdminController
         $response = $this->service->deleteUser($_POST['user_id']);
 
         $_SESSION[$response['type']] = $response['message'];
-        header("Location: /public/admin/users.php");
+        header("Location: /admin/users.php");
         exit;
     }
 
@@ -48,7 +49,7 @@ class AdminController
         $response = $this->service->deleteSelected($_POST['user_ids'] ?? []);
 
         $_SESSION[$response['type']] = $response['message'];
-        header("Location: /public/admin/users.php");
+        header("Location: /admin/users.php");
         exit;
     }
 
@@ -58,7 +59,7 @@ class AdminController
         $response = $this->service->addUser($_POST);
 
         $_SESSION[$response['type']] = $response['message'];
-        header("Location: /public/admin/users.php");
+        header("Location: /admin/users.php");
         exit;
     }
 
@@ -68,7 +69,7 @@ class AdminController
         $response = $this->service->updateUser($_POST);
 
         $_SESSION[$response['type']] = $response['message'];
-        header("Location: /public/admin/users.php");
+        header("Location: /admin/users.php");
         exit;
     }
 }

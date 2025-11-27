@@ -1,18 +1,22 @@
 <?php include __DIR__ . '/../layouts/header.php'; ?>
 
-<h2 class="display-4 text-center fw-bold">Password Change</h2>
+<section class="form-page">
 
-<form action="/public/update_password.php" method="post">
-    
-    <?php if ($user->last_login): ?>
-    <input class="form-control" type="password" name="old_password" placeholder="Old Password">
-    <?php endif ?>
+    <h2 class="display-4 fw-medium">Password Change</h2>
 
-    <input class="form-control" type="password" name="new_password" placeholder="New Password">
-    <input class="form-control" type="password" name="confirm_new_password" placeholder="Confirm New Password">
-    <button type="submit" name="user_id" value="<?= $_SESSION["user_id"] ?>">Update Password</button>
+    <form action="/update_password.php" method="post">
+        
+        <?php if ($user->last_login): ?>
+        <input class="form-control" type="password" name="old_password" placeholder="Old Password" required>
+        <?php endif ?>
 
-</form>
+        <input class="form-control" type="password" name="new_password" placeholder="New Password" required>
+        <input class="form-control" type="password" name="confirm_new_password" placeholder="Confirm New Password" required>
+        <button type="submit" name="user_id" value="<?= $_SESSION["user_id"] ?>">Update Password</button>
+
+    </form>
+
+</section>
 
 <script src="/public/assets/static/js/flashMessage.js"></script>
 

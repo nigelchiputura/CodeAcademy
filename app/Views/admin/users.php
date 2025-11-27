@@ -39,12 +39,12 @@
                 </button>
             </div>
 
-            <?php include __DIR__ . '/../admin/partials/table.php'; ?>
+            <?php include __DIR__ . '/../admin/partials/users/table.php'; ?>
 
         </main>
 
-<?php include __DIR__ . '/../admin/partials/crud_modals.php'; ?>
+<?php include __DIR__ . '/../admin/partials/users/crud_modals.php'; ?>
 
-<script src="/public/assets/static/js/admin.js"></script>
+<script src="/portal/assets/static/js/admin.js"></script>
 
 <?php include __DIR__ . '/../layouts/footer.php'; ?>

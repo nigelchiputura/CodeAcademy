@@ -11,30 +11,35 @@ CREATE TABLE users (
     
     -- account identifiers
     phone VARCHAR(20) NOT NULL UNIQUE,
-    email VARCHAR(100) UNIQUE NULL,
+    email VARCHAR(100) UNIQUE DEFAULT NULL,
     
     -- login username OPTIONAL because phone is the main credential
     username VARCHAR(50) UNIQUE NULL,
     
     -- hashed password
     password_hash VARCHAR(255) NOT NULL,
-
-    is_password_temporary BOOLEAN DEFAULT TRUE,   -- forces password update after SMS
+    is_password_temporary BOOLEAN DEFAULT TRUE,
     
     -- names stored properly
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     
     -- account lifecycle
-    status ENUM('active','disabled','pending_verification','locked')
-        DEFAULT 'pending_verification',
-    
+    status ENUM('active','disabled','pending_verification','locked') DEFAULT 'pending_verification',
     phone_verified BOOLEAN DEFAULT FALSE,
     
     -- logging
     last_login DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- fixed line
+    
+    -- admin accountability
+    created_by INT NULL,
+    updated_by INT NULL,
+    deleted_at DATETIME NULL,
+    
+    FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL,
+    FOREIGN KEY (updated_by) REFERENCES users(user_id) ON DELETE SET NULL
 );
 
 CREATE TABLE user_roles (
@@ -85,3 +90,5 @@ CREATE TABLE user_profiles (
 );
 
 CREATE INDEX idx_user_role ON user_roles(user_id, role_id);
+CREATE UNIQUE INDEX idx_users_phone ON users(phone);
+CREATE UNIQUE INDEX idx_users_username ON users(username);

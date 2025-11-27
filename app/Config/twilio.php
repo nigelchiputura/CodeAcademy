@@ -2,6 +2,6 @@
 
 return [
     "sid" => "",
-    "token" => "",     
+    "token" => "",  
     "from" => ""
 ];

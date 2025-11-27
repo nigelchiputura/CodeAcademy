@@ -7,7 +7,7 @@ class Auth
     public static function requireLogin()
     {
         if (!isset($_SESSION['user_id'])) {
-            header("Location: /public/login.php");
+            header("Location: /login.php");
             exit;
         }
     }

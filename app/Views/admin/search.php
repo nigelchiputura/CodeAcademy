@@ -9,11 +9,13 @@
 
     <h1 class="display-6">Search Results</h1>
     <hr>
-    <?php require_once __DIR__ . '/partials/table.php'; ?>
-    <?php require_once __DIR__ . '/partials/crud_modals.php'; ?>
+    <?php require_once __DIR__ . '/partials/users/table.php'; ?>
+    <?php require_once __DIR__ . '/partials/users/crud_modals.php'; ?>
     
     <?php endif ?>
 
 </div>
+
+<script src="/portal/assets/static/js/admin.js"></script>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>

@@ -1,31 +1,104 @@
 -- CREATE DATABASE
-CREATE DATABASE IF NOT EXISTS nigey_academy;
+CREATE DATABASE IF NOT EXISTS nigey_academy_improved;
 
 -- SWICTH TO CORRECT DB
-USE nigey_academy;
+USE nigey_academy_improved;
 
--- USERS TABLE
-CREATE TABLE IF NOT EXISTS users (
-  user_id INT AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(50) UNIQUE,
-  password VARCHAR(255),
-  role ENUM('admin','teacher','parent','student'),
-  email VARCHAR(100) DEFAULT NULL,
-  phone VARCHAR(20) NOT NULL UNIQUE,
-  full_name VARCHAR(100),
-  last_login DATETIME NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE roles (
+    role_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) UNIQUE NOT NULL  -- admin, teacher, parent, student, etc.
 );
 
--- PASSWORD RESET TABLE
-CREATE TABLE IF NOT EXISTS password_resets (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+INSERT INTO roles (name)
+VALUES ('admin'), ('teacher'), ('parent'), ('student');
+
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    
+    -- account identifiers
+    phone VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(100) UNIQUE DEFAULT NULL,
+    
+    -- login username OPTIONAL because phone is the main credential
+    username VARCHAR(50) UNIQUE NULL,
+    
+    -- hashed password
+    password_hash VARCHAR(255) NOT NULL,
+    is_password_temporary BOOLEAN DEFAULT TRUE,
+    
+    -- names stored properly
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    
+    -- account lifecycle
+    status ENUM('active','disabled','pending_verification','locked') DEFAULT 'pending_verification',
+    phone_verified BOOLEAN DEFAULT FALSE,
+    
+    -- logging
+    last_login DATETIME NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- fixed line
+    
+    -- admin accountability
+    created_by INT NULL,
+    updated_by INT NULL,
+    deleted_at DATETIME NULL,
+    
+    FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL,
+    FOREIGN KEY (updated_by) REFERENCES users(user_id) ON DELETE SET NULL
+);
+
+CREATE TABLE user_roles (
     user_id INT NOT NULL,
-    otp VARCHAR(6) NOT NULL,
-    created_at DATETIME NOT NULL,
+    role_id INT NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES roles(role_id) ON DELETE CASCADE
+);
+
+CREATE TABLE otp_verification (
+    otp_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    otp VARCHAR(10) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     expires_at DATETIME NOT NULL,
+    verified BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
+
+CREATE TABLE password_resets (
+    reset_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    reset_token VARCHAR(100) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    expires_at DATETIME NOT NULL,
+    used BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE login_attempts (
+    attempt_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NULL,
+    phone_attempted VARCHAR(20),
+    reason ENUM('wrong_password','otp_failed','account_locked','success') DEFAULT 'success',
+    ip_address VARCHAR(50),
+    success BOOLEAN,
+    attempted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE user_profiles (
+    user_id INT PRIMARY KEY,
+    address TEXT NULL,
+    profile_picture VARCHAR(255),
+    date_of_birth DATE NULL,
+    emergency_contact VARCHAR(20),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_user_role ON user_roles(user_id, role_id);
+CREATE UNIQUE INDEX idx_users_phone ON users(phone);
+CREATE UNIQUE INDEX idx_users_username ON users(username);
+
 
 -- ACADEMIC LEVELS AND STREAMS
 CREATE TABLE class_levels (
@@ -41,10 +114,10 @@ CREATE TABLE class_types (
 -- TEACHERS TABLE
 CREATE TABLE teachers (
     teacher_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,   -- FK to users table in your auth system
+    user_id INT NOT NULL,
     hire_date DATE,
     qualification VARCHAR(100),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 -- CLASSES TABLE
@@ -59,7 +132,7 @@ CREATE TABLE classes (
     FOREIGN KEY (type_id) REFERENCES class_types(type_id)
 );
 
---  STUDENTS TABLE
+-- STUDENTS TABLE
 CREATE TABLE students (
     student_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -68,9 +141,9 @@ CREATE TABLE students (
     national_id VARCHAR(20) UNIQUE NULL,
     address TEXT NULL,
     date_of_birth DATE NULL,
-    date_enrolled DATE DEFAULT CURRENT_DATE,
+    date_enrolled DATE DEFAULT (CURRENT_DATE),
     status ENUM('active','transferred','suspended','graduated') DEFAULT 'active',
-    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (class_id) REFERENCES classes(class_id)
 );
 
@@ -136,7 +209,7 @@ CREATE TABLE payments (
     student_id INT NOT NULL,
     term_id INT NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
-    payment_date DATE DEFAULT CURRENT_DATE,
+    payment_date DATE DEFAULT (CURRENT_DATE),
     method VARCHAR(50) NULL,     -- Cash, Swipe, Ecocash, etc.
     balance_before DECIMAL(10,2) NULL,
     balance_after DECIMAL(10,2) NULL,
@@ -163,8 +236,8 @@ CREATE TABLE messages (
     content TEXT NOT NULL,
     type ENUM('inbox','notice','system','fee_reminder') DEFAULT 'inbox',
     sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (sender_id) REFERENCES users(id),
-    FOREIGN KEY (receiver_id) REFERENCES users(id)
+    FOREIGN KEY (sender_id) REFERENCES users(user_id),
+    FOREIGN KEY (receiver_id) REFERENCES users(user_id)
 );
 
 -- CHATBOT FAQ TABLE

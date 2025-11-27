@@ -1,4 +1,4 @@
-<form id="usersForm" action="./delete_selected.php" method="post">
+<form id="usersForm" action="./users/delete_selected.php" method="post">
     <div class="table-container">
         <table class="table table-hover table-bordered table-striped align-middle">
             <thead>

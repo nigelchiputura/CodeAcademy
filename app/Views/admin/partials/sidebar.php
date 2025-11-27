@@ -1,7 +1,7 @@
 <aside class="sidebar" id="sidebar">
     
     <div class="logo">
-        <img src="/public/assets/static/images/logo.png" class="shadow rounded-pill p-1   " alt="">
+        <img src="/portal/assets/static/images/logo.png" class="shadow rounded-pill p-1   " alt="">
     </div>
 
     <ul class="menu" id="menu">

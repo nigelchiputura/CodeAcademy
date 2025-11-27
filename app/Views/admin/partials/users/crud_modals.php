@@ -8,7 +8,7 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="./add_user.php" method="post">
+                <form action="./users/add.php" method="post">
                     <div class="mb-3">
                         <label class="form-label">Username</label>
                         <input type="text" class="form-control" placeholder="Enter username" name="username" required>
@@ -51,7 +51,7 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="./update_user.php" method="post">
+                <form action="./users/update.php" method="post">
                     <div class="mb-3">
                         <label class="form-label">Username</label>
                         <input type="text" class="form-control update-field" value="" id="username-update" name="username" required>
@@ -96,7 +96,7 @@
             </div>
             <div class="modal-body">
                 <p id="confirm-delete">Are you sure you want to delete <strong></strong>?</p>
-                <form action="./delete.php" method="post">
+                <form action="./users/delete.php" method="post">
                     <div class="d-flex justify-content-end gap-2">
                         <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button class="btn btn-danger" id="user-delete-btn" type="submit" name="user_id" value="">Delete</button>

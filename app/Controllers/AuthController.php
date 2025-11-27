@@ -30,7 +30,7 @@ class AuthController
 
         if(isset($response['error'])) {
             $_SESSION['error'] = $response['error'];
-            header("Location: /public/login.php");
+            header("Location: /login.php");
             exit;
         }
 
@@ -41,23 +41,23 @@ class AuthController
         switch ($user->role) {
 
             case 'admin':
-                header("Location: /public/admin/dashboard.php");
+                header("Location: /admin/dashboard.php");
                 break;
 
             case 'teacher':
-                header("Location: /public/teacher/dashboard.php");
+                header("Location: /teacher/dashboard.php");
                 break;
 
             case 'parent':
-                header("Location: /public/parent/dashboard.php");
+                header("Location: /parent/dashboard.php");
                 break;
 
             case 'student':
-                header("Location: /public/student/dashboard.php");
+                header("Location: /student/dashboard.php");
                 break;
 
             default:
-                header("Location: /public/login.php");
+                header("Location: /login.php");
         }
         exit;
     }
@@ -101,12 +101,12 @@ class AuthController
         if(isset($response['error'])) {
             $_SESSION['error'] = $response['error'];
             // die($response['error']);
-            header("Location: /public/update_password.php");
+            header("Location: /update_password.php");
             exit;
         }
 
         $_SESSION['success'] = 'Password updated successfully';
-        header("Location: /public/index.php");
+        header("Location: /index.php");
         exit;
     }
 }
