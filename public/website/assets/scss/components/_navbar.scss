@@ -1,0 +1,129 @@
+@use "../custom" as *;
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: $white;
+    z-index: 999;
+    transition: $transition;
+    -webkit-box-shadow: 0 2px 5px 0 $night-rider;
+    -moz-box-shadow: 0 2px 5px 0 $night-rider;
+    box-shadow: 0 2px 5px 0 $night-rider;
+
+    .brand-and-toggler {
+        font-size: 1.65rem;
+        padding: 0.8rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .navbar-brand {
+            font-weight: 500;
+            color: $night-rider !important;
+            width: 140px;
+
+            span {
+                color: $mount-meadow;
+            }
+        }
+
+        .navbar-toggler {
+            border: none;
+            color: $mount-meadow;
+            font-size: inherit;
+        }
+    }
+
+    .navbar-nav {
+        margin: 0.2rem 0 0.6rem 0;
+    }
+
+    .nav-item {
+        padding: 0.6rem 0;
+    }
+
+    .nav-link {
+        text-transform: uppercase;
+        font-size: 0.95rem;
+        letter-spacing: 1.5px;
+        font-weight: 400;
+        opacity: 0.8;
+        transition: $transition;
+
+        &:hover {
+            color: $mount-meadow !important;
+        }
+    }
+
+    .navbar-collapse {
+        display: none;
+    }
+
+    .dropdown {
+        position: relative;
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .dropdown-icon {
+            width: 14px;
+            height: 14px;
+            border: 2px solid $mount-meadow;
+            border-top-color: transparent;
+            border-left-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            transition: transform 0.4s ease;
+            transform: rotate(0deg);
+        }
+
+        &.open .dropdown-icon {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: $white;
+            padding: 0.5rem 0;
+            border-radius: 0.25rem;
+            min-width: 180px;
+            display: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            z-index: 1000;
+
+            li {
+                padding: 0.3rem 1rem;
+            }
+
+            a {
+                display: block;
+                color: $night-rider;
+                text-transform: uppercase;
+                font-size: 0.85rem;
+                letter-spacing: 1px;
+                opacity: 0.9;
+                transition: $transition;
+
+                &:hover {
+                    color: $mount-meadow;
+                }
+            }
+        }
+
+        &.open .dropdown-menu {
+            display: block;
+        }
+    }
+}
+
+.dropdown.open .dropdown-menu {
+    display: block;
+}

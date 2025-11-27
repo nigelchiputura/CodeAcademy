@@ -1,0 +1,67 @@
+@use "../custom" as  *;
+@use "../components/mixins" as  *;
+
+.header {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7)), url(../../static/images/intro.jpg);
+    min-height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    
+    .hero-div {
+        flex: 1;
+        flex-direction: column;
+        text-align: center;
+
+        h1 {
+            @include subHeaderFontSize;
+            padding-bottom: 0.4rem;
+            line-height: 1.2;
+        }
+
+        p {
+            // @include subHeaderFontSize;
+            color: $white-smoke;
+            letter-spacing: 3px;
+        }
+
+        .hero-btns {
+            margin-top: 2.8rem;
+
+            button {
+                border: 3.5px solid $white;
+                border-radius: 2rem;
+                padding: 0.8rem 2rem;
+                text-transform: uppercase;
+            }
+        }
+
+        .btn-trans {
+            color: $white;
+            // display: none;
+            transition: $transition;
+            margin-bottom: 10px;
+
+            &:hover {
+                background: $mount-meadow;
+                border-color: $mount-meadow;
+            }
+        }
+
+        .btn-white {
+            background: $white;
+            color: $night-rider;
+            transition: $transition;
+
+            &:hover {
+                background: transparent;
+                color: $white;
+            }
+        }
+    }
+}

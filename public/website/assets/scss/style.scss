@@ -1,0 +1,10 @@
+@use "./custom";
+
+// Import the section styles
+@use "./sections/intro";
+@use "./sections/about";
+
+// Import the component styles
+@use "./components/navbar";
+@use "./components/animations";
+@use "./components/media";

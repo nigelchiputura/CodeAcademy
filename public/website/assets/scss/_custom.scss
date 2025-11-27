@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
+$accent:     #3c83f6;
+$mount-meadow: orangered;
+$mount-meadow: #3c83f6;
+$light-gray: #f9f9f9;
+$white-smoke: #f0f0f0;
+$white: #fff;
+$night-rider: #343434;
+$black: #191b17;
+$transition: all 0.5s ease-in-out;
+
+* {
+    font-family: 'Nunito Sans' ,'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    // transition: $transition;
+}
+
+html {
+    color: $black;
+    font-size: clamp(1rem, 2.5vh, 1.5rem);
+    font-weight: 300;
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+}
+
+img {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: $black;
+}
+
+li {
+    list-style-type: none;
+}
+
+button {
+    cursor: pointer;
+    outline: 0;
+    background: transparent;
+}
+
+.container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0.6rem 0;
+    // line-height: 1.25rem;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.text {
+    margin: 0.6rem 0;
+    opacity: 0.8;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section {
+    padding: 6.5rem 0;
+    // min-height: 100vh;
+}
+
+.title {
+    padding: 0.6rem 0;
+    text-align: center;
+
+    h2 {
+        font-size: 2.2rem;
+        color: $night-rider;
+    }
+
+    .text {
+        font-weight: 500;
+        font-size: 1.1rem;
+    }
+}
+
+.header-line {
+    width: 60px;
+    height: 5px;
+    background: $mount-meadow;
+    margin: auto;
+}
+
+// STYLE THE BACK TO TOP BUTTON
+
+.back-to-top {
+    position: fixed;
+    width: 3rem;
+    height: 3rem;
+    right: 1.875rem;
+    bottom: 1.875rem;
+    z-index: 1;
+    display: grid;
+    place-content: center;
+
+    i {
+        color: $white;
+        font-size: 1rem;
+    }
+}

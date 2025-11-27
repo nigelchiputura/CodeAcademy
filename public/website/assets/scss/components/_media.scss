@@ -1,0 +1,199 @@
+@use '../custom' as *;
+@use '../components/mixins' as *;
+
+@media screen and (min-width: 768px) {
+    .detail {
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        &-item {
+            margin: 0;
+        }
+    }
+
+    .team-item {
+        margin: 0;
+    }
+
+    .faq {
+
+        .row {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .inventory {
+        
+        .row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        &-item {
+            margin: 0;
+        }
+    }
+
+    .testimonial {
+
+        &-item {
+
+            p {
+                width: 75%;
+                margin-left: auto;
+                margin-right: auto; 
+            }
+        }
+    }
+
+    .contact {
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 2rem;
+        }
+
+        &-right {
+
+            div:first-child {
+                margin-top: 0;
+            }
+        }
+    }
+} 
+
+@media screen and (min-width: 992px) {
+    .navbar {
+        background: rgba($white, 0.8);
+        margin-top: 1.4rem;
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .navbar-brand {
+                color: $white-smoke;
+                @include subHeaderFontSize;
+            }
+        }
+
+        .navbar-toggler {
+            display: none;
+        }
+
+        .navbar-collapse {
+            display: block !important;
+        }
+
+        .navbar-nav {
+            display: flex;
+            margin: 0;
+        }
+
+        .nav-item {
+            margin-left: 1.8rem;
+        }
+
+        // .nav-link {
+        //     color: inherit;
+        // }
+    }
+
+    .hero-div {
+
+        h1 {
+            font-size: 3.8rem;
+        }
+
+        .btn-trans {
+            display: inline-block;
+            margin-right: 0.8rem;
+        }
+    }
+
+    /* navbar change */
+    .cng-navbar {
+        -webkit-box-shadow: 0 2px 5px 0 rgba(207, 205, 207);
+        -moz-box-shadow: 0 2px 5px 0 rgba(207, 205, 207);
+        box-shadow: 0 2px 5px 0 rgba(207, 205, 207);
+        margin-top: 0;
+        background: $white;
+
+        .navbar-brand {
+            color: $night-rider !important;
+        }
+
+        .nav-link {
+            color: $night-rider;
+        }
+    }
+
+    .about {
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            align-items: center;
+            column-gap: 2rem;
+        }
+
+        &-right {
+            margin-top: 0;
+        }
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .hero-div {
+        width: 70%;
+
+        h1 {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .detail {
+
+        .row {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .inventory {
+
+        .row {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .testimonial {
+
+        &-item {
+
+            p {
+                width: 60%;
+            }
+        }
+    }
+
+    .contact {
+
+        .row {
+            column-gap: 4rem;
+        }
+
+        &-right {
+            padding-left: 4rem !important;
+        }
+    }
+}

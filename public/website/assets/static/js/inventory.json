@@ -1,0 +1,30 @@
+[
+    {
+        "imagePath": "HP-1.png",
+        "name": "HP Omnibook Gen 7", 
+        "price": "$430",
+        "gallery": ["HP-4.jpg", "HP-1.png", "HP-3.jpg", "HP-5.jpg"],
+        "features": ["9 Hour Battery", "512GB SSD Storage", "Nvidia Graphics", "6 Month Warranty", "Office / Gaming Use"]
+    },
+    {
+        "imagePath": "HP-4.jpg",
+        "name": "HP Probook G450", 
+        "price": "$250", 
+        "gallery": ["HP-4.jpg", "HP-1.png", "HP-3.jpg", "HP-5.jpg"],
+        "features": ["10 Hour Battery", "1 Terabyte HHD", "C-Type Charging", "3 Month Warranty", "Heavy Office Use"]
+    },
+    {
+        "imagePath": "Lenovo-1.jpg",
+        "name": "Lenovo Thinkpad t440", 
+        "price": "$180",
+        "gallery": ["HP-4.jpg", "HP-1.png", "HP-3.jpg", "HP-5.jpg"],
+        "features": ["6 Hour Battery", "512GB HHD Storage", "3 Month Warranty", "Office / Student Use"]
+    },
+    {
+        "imagePath": "Lenovo-2.jpg",
+        "name": "Lenovo Thinkpad t470", 
+        "price": "$220",
+        "gallery": ["HP-4.jpg", "HP-1.png", "HP-3.jpg", "HP-5.jpg"],
+        "features": ["8 Hour Battery", "512GB HHD Storage", "4 Month Warranty", "Office / Student Use"]
+    }
+]
