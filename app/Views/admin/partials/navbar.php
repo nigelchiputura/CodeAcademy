@@ -1,6 +1,6 @@
 <header>
 
-    <nav class="navbar navbar-expand-lg navbar-light shadow text-end">
+    <nav class="navbar navbar-expand-lg navbar-light shadow text-end bg-white">
 
         <div class="container-fluid">
             

@@ -1,23 +1,34 @@
 <?php include __DIR__ . '/../layouts/header.php'; ?>
 
-<section class="form-page">
+<div class="container mt-5" style="max-width: 500px;">
+    <h3 class="text-center mb-4">Update Password</h3>
+    <hr>
 
-    <h2 class="display-4 fw-medium">Password Change</h2>
-
-    <form action="/update_password.php" method="post">
+    <form method="post" action="/update_password.php">
         
-        <?php if ($user->last_login): ?>
-        <input class="form-control" type="password" name="old_password" placeholder="Old Password" required>
-        <?php endif ?>
+        <?php csrf_field(); ?>
+        
+        <?php if (!isset($_SESSION['force_password_reset'])): ?>
+        <div class="mb-3">
+            <label class="form-label">Current Password</label>
+            <input type="password" name="old_password" class="form-control" required>
+        </div>
+        <?php endif; ?>
 
-        <input class="form-control" type="password" name="new_password" placeholder="New Password" required>
-        <input class="form-control" type="password" name="confirm_new_password" placeholder="Confirm New Password" required>
-        <button type="submit" name="user_id" value="<?= $_SESSION["user_id"] ?>">Update Password</button>
+        <div class="mb-3">
+            <label class="form-label">New Password</label>
+            <input type="password" name="new_password" class="form-control" required>
+        </div>
 
+        <div class="mb-3">
+            <label class="form-label">Confirm New Password</label>
+            <input type="password" name="confirm_new_password" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+            Update Password
+        </button>
     </form>
-
-</section>
-
-<script src="/public/assets/static/js/flashMessage.js"></script>
+</div>
 
 <?php include __DIR__ . '/../layouts/footer.php'; ?>

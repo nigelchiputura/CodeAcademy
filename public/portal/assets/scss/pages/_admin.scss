@@ -1,7 +1,7 @@
 @use "../custom" as *;
 
 #admin {
-  display: flex;
+  // display: flex;
   background: linear-gradient(180deg, $gray-100 0%, $white 100%);
   color: $dark;
   min-height: 100vh;
@@ -69,8 +69,8 @@
 }
 
 main {
-    flex: 1;
-    margin-left: 120px;
+    // flex: 1;
+    // margin-left: 120px;
     padding: 2rem;
     transition: margin-left 0.5s ease;
 

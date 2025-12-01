@@ -14,6 +14,19 @@ const aboutItemContainerLeft = document.getElementById(
   "about-item-container-left"
 );
 
+const text = "Compiling Tomorrow's Coders Today. </>";
+let index = 0;
+
+function type() {
+  if (index < text.length) {
+    document.getElementById("typed-text").innerHTML += text.charAt(index);
+    index++;
+    setTimeout(type, 80);
+  }
+}
+
+window.onload = () => type();
+
 $(document).ready(function () {
   // team carousel
   $(".team .owl-carousel").owlCarousel({

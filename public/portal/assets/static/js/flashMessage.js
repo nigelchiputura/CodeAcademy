@@ -1,7 +1,23 @@
-setTimeout(function () {
-  const message = document.querySelector(".display-msg");
-  if (message) {
-    message.style.opacity = 0;
-    message.style.display = "none";
+// flashMessage.js
+
+window.addEventListener("DOMContentLoaded", () => {
+  const flash = document.querySelector(".flash-message");
+  if (!flash) return;
+
+  // Show animation
+  flash.classList.add("show");
+
+  // Auto hide after 5 seconds
+  setTimeout(() => hideFlash(), 5000);
+
+  // Close button support
+  const closeBtn = flash.querySelector(".close-btn");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", hideFlash);
   }
-}, 5000);
+
+  function hideFlash() {
+    flash.classList.remove("show");
+    setTimeout(() => (flash.style.display = "none"), 400);
+  }
+});

@@ -25,20 +25,69 @@ body {
     white-space: nowrap;
 }
 
-.display-msg {
-    color: $white;
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.flash-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: #fff;
     font-weight: 600;
+    z-index: 2000;
+    min-width: 280px;
+    max-width: 500px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .4s ease, transform .4s ease;
+}
+
+.flash-message.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+}
+
+.flash-message .close-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: white;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+/* Themes */
+.flash-success {
+    background: #28a745;
+}
+
+.flash-error {
+    background: #dc3545;
+}
+
+.flash-warning {
+    background: #ffc107;
+    color: #222;
+}
+
+.flash-info {
+    background: #0dcaf0;
+}
+
+.navbar {
     position: fixed;
     top: 0;
-    padding: 10px;
-    width: 100%;
+    right: 0;
+    left: 0;
     z-index: 100;
-}
-
-.error {
-    background-color: red;
-}
-
-.success {
-    background-color: rgb(0, 255, 0);
 }

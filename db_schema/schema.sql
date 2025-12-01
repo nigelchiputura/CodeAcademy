@@ -247,3 +247,20 @@ CREATE TABLE chatbot_faq (
     answer TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE rate_limits (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ip VARCHAR(50) NOT NULL,
+    endpoint VARCHAR(100) NOT NULL,
+    attempts INT DEFAULT 0,
+    last_attempt DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE activity_log (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NULL,
+    action VARCHAR(255) NOT NULL,
+    details TEXT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE SET NULL
+);

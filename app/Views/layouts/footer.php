@@ -37,6 +37,8 @@
   </div>
 </div>
 
+<?php require_once __DIR__ . '/chatbot.php' ?>
+
 <script>
 window.addEventListener('load', () => {
   document.getElementById('loading-spinner').classList.add('hidden');

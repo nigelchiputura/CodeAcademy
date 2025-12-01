@@ -46,28 +46,42 @@ userModalBtnContainer.forEach((container) => {
           });
         }
       } else if (btnAction === "update") {
+        // text inputs (first_name, last_name, username, email, phone)
         userUpdateModalInputFields.forEach((inputField) => {
-          let fieldName = inputField.getAttribute("id").replace("-update", "");
-          let userUpdateSubmitBtn = document.getElementById("user-update-btn");
+          const fieldName = inputField
+            .getAttribute("id")
+            .replace("-update", "");
+          const value = userInfoObject[fieldName];
 
-          userUpdateSubmitBtn.setAttribute("value", userInfoObject["id"]);
-
-          // console.log(fieldName);
-          for (let key in userInfoObject) {
-            if (fieldName === key) {
-              // console.log(fieldName);
-              inputField.setAttribute("value", userInfoObject[key]);
-              if (inputField.getAttribute("id") === "role-update") {
-                let selectOptions = inputField.querySelectorAll("option");
-                selectOptions.forEach((option) => {
-                  // console.log(option)
-                  if (option.getAttribute("id") === userInfoObject[key]) {
-                    option.selected = true;
-                  }
-                });
-              }
-            }
+          if (typeof value !== "undefined" && !Array.isArray(value)) {
+            inputField.value = value;
           }
+
+          if (inputField.getAttribute("id") === "status-update") {
+            let selectOptions = inputField.querySelectorAll("option");
+            selectOptions.forEach((option) => {
+              if (option.value === userInfoObject["status"]) {
+                option.selected = true;
+              }
+            });
+          }
+        });
+
+        // set hidden user_id
+        const hiddenIdInput = document.getElementById("user-id-update");
+        if (hiddenIdInput) {
+          hiddenIdInput.value = userInfoObject["id"];
+        }
+
+        // roles: tick checkboxes
+        const roleCheckboxes =
+          userUpdateModalBody.querySelectorAll(".role-checkbox");
+        const userRoles = Array.isArray(userInfoObject.roles)
+          ? userInfoObject.roles.map((r) => r.toLowerCase())
+          : [];
+
+        roleCheckboxes.forEach((cb) => {
+          cb.checked = userRoles.includes(cb.value.toLowerCase());
         });
       } else if (btnAction === "delete") {
         let confirmationMessage =

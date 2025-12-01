@@ -14,9 +14,9 @@
         }
     ],
     "require": {
-        "ext-pdo": "*"
-    },
-    "require": {
+        "ext-pdo": "*",
+        "tecnickcom/tcpdf": "*",
+        "vlucas/phpdotenv": "^5.6",
         "twilio/sdk": "^8.8"
     }
 }

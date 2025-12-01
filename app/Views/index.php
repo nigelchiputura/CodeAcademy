@@ -26,6 +26,8 @@
         </div>
     </template>
 
+    <?php require_once __DIR__ . '/layouts/sidebar.php'; ?>
+
     <article id="index">
 
         <!-- HEADER -->
@@ -70,8 +72,8 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
-                                    <li><a href="./login.php"><i class="fas fa-user"></i> Login</a></li>
                                     <li><a href="#"><i class="fas fa-images"></i> Gallery</a></li>
+                                    <li><a href="#"><i class="fas fa-users"></i> Our Staff</a></li>
                                     <li><a href="#"><i class="fas fa-newspaper"></i> News</a></li>
                                 </ul>
                             </li>
@@ -128,28 +130,14 @@
 
     </article>
 
-    <script>
-        
-        const text = "Compiling Tomorrow's Coders Today. </>";
-        let index = 0;
-
-        function type() {
-            if (index < text.length) {
-                document.getElementById("typed-text").innerHTML += text.charAt(index);
-                index++;
-                setTimeout(type, 80);
-            }
-        }
-
-        window.onload = () => type();
-
-    </script>
+    <?php require_once __DIR__ . '/layouts/chatbot.php' ?>
 
     <script src="/website/assets/static/js/jquery-3.7.1.js"></script>
     <script src="/website/assets/static/OwlCarousel2-2.3.4/dist/owl.carousel.js"></script>
     <script src="/website/assets/static/js/index.js" type="module"></script>
     <script src="/website/assets/static/js/navbar.js" type="module"></script>
     <script src="/website/assets/static/js/fadeIn.js"></script>
+    <script src="/website/assets/static/js/sidebar.js"></script>
 
 </body>
 </html>

@@ -1,67 +1,78 @@
 @use "../custom" as *;
 
+$gray: #374151;
+$link-color: #c7c7c7ff;
+
+#toggleSidebar {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: $accent;
+    border: none;
+    color: $white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 .sidebar {
   position: fixed;
-  top: 0; left: 0; bottom: 0;
-  width: 125px;
-  height: 100vh;
-  background: linear-gradient(180deg, $accent, darken($accent, 5%));
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background: linear-gradient(180deg, #1f2937, darken(#1f2937, 5%));
   color: $white;
-  overflow: hidden;
-  transition: all 0.4s ease-in-out;
-  box-shadow: 3px 0 10px rgba($black, 0.1);
-  z-index: 10;
+  transition: left 0.3s ease;
+  // padding-top: 60px;
+  padding: 60px 5px 0;
+  z-index: 1000;
 
-  &:hover {
-    width: 240px;
-    .label { opacity: 1; transform: translateX(0); }
-  }
-
-  .logo {
-    position: relative;
-    margin: 1rem auto;
+  h3 {
+    color: $white;
     text-align: center;
-    img {
-      width: 80px;
-      border-radius: 50%;
-      border: 2px solid rgba($white, 0.8);
-      box-shadow: 0 4px 6px rgba($black, 0.2);
+    margin-bottom: 2rem;
+
+    span {
+      display: block;
+      font-size: 2rem;
+      margin-bottom: 0.6rem;
     }
   }
 
-  .menu {
+  ul {
     list-style: none;
     padding: 0;
-    margin-top: 1.5rem;
 
     li {
-      margin: 8px 0;
-      border-radius: 8px;
-      transition: all 0.3s ease-in-out;
+      padding: 15px 20px;
+      border-bottom: 1px solid $gray;
 
-      &:hover {
-        background: rgba($white, 0.1);
-        transform: scale(1.05);
-      }
-
-      &.active {
-        background: rgba($white, 0.2);
-        border-left: 4px solid $white;
+      &:first-child {
+        border-top: 1px solid $gray;
       }
 
       a {
-        color: $white;
+        color: $link-color;
         text-decoration: none;
         display: flex;
         align-items: center;
-        gap: 1.5rem;
-        padding: 1rem;
-        transition: color 0.3s ease-in-out;
+        transition: all ease-in-out 0.3s;
+
+        &:hover {
+          color: $accent;
+          scale: 1.1;
+        }
 
         i {
-          font-size: 1.3rem;
+          margin-right: 10px;
         }
       }
     }
   }
+}
+
+.sidebar.show {
+    left: 0;
 }

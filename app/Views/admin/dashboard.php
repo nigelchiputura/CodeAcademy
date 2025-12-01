@@ -76,7 +76,7 @@
 
         </div>
 
-        <div class="dash-link-container">
+        <div class="dash-link-container mb-5">
             
                 <a class="dash-link p-4" href="./users.php">
                     <i class="fas fa-user"></i>
@@ -99,6 +99,29 @@
                     Manage Payments
                 </a>
 
+        </div>
+
+        <hr>
+
+        <div class="mt-5">
+            <h4>Recent Activity</h4>
+            <div class="card shadow-sm p-3">
+                <?php if (empty($recent)): ?>
+                    <p class="text-muted mb-0 text-center">No recent actions</p>
+                <?php else: ?>
+                    <ul class="list-group list-group-flush">
+                        <?php foreach ($recent as $log): ?>
+                            <li class="list-group-item text-secondary">
+                                <strong><?= htmlspecialchars($log['action']) ?></strong>
+                                — <?= htmlspecialchars($log['details'] ?? '') ?>
+                                <span class="text-muted float-end small">
+                                    <?= date("d M Y H:i", strtotime($log['created_at'])) ?>
+                                </span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+            </div>
         </div>
 
     </main>
