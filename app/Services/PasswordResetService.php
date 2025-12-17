@@ -39,12 +39,12 @@ class PasswordResetService
 
         $this->resets->createReset($user->id, $code, 15); // 15-minute expiry
 
-        $subject = "Garage And Gate Experts Password Reset!";
+        $subject = "Code Academy Password Reset!";
 
         $html = "
             <p>Your Garage & Gate Experts password reset code is: {$code}. It expires in 15 minutes.</p>
             <p>Click the link below and enter the code you just received:</p>
-            <a href='https://garagegurus/password-reset'>Reset Password</a>
+            <a href='https://codeacademy.com/password-reset'>Reset Password</a>
         ";
 
         $emailSent = true;

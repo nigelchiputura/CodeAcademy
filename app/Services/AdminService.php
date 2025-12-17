@@ -72,7 +72,7 @@ class AdminService
         $this->users->assignRoles($userId, $data['roles'] ?? ['student']);
         $this->activityLog->log($_SESSION['user_id'], "Created User", "User {$data['phone']} added");
 
-        $subject = "Welcome to Garage & Gate Experts";
+        $subject = "Welcome to CodeAcademy";
 
         $html = "
             <p>Hi {$data['first_name']},</p>
@@ -80,6 +80,7 @@ class AdminService
             <p><strong>Login:</strong> {$data['phone']}<br>
             <strong>Password:</strong> {$plainPassword}</p>
             <p>Please change your password after your first login.</p>
+            <a href='https://codeacademy.com/admin-login'>Login To CodeAcademy</a>
         ";
 
         $emailSent = true;
