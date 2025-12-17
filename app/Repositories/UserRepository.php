@@ -274,6 +274,33 @@ class UserRepository
         return array_map(fn($u) => $this->mapUserWithRoles($u), $rows);
     }
 
+    public function filterByRole(string $roleName): array
+    {
+        $stmt = $this->db->prepare("
+            SELECT u.*
+            FROM users u
+            JOIN user_roles ur ON ur.user_id = u.user_id
+            JOIN roles r ON r.role_id = ur.role_id
+            WHERE u.deleted_at IS NULL
+            AND r.name = :role
+            ORDER BY u.user_id DESC
+        ");
+
+        $stmt->execute([':role' => strtolower($roleName)]);
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return array_map(fn($u) => $this->mapUserWithRoles($u), $rows);
+    }
+
+    public function getAllRoles(): array
+    {
+        return $this->db->query("
+            SELECT name 
+            FROM roles
+            ORDER BY name ASC
+        ")->fetchAll(PDO::FETCH_COLUMN);
+    }
+
     /* -------------------------
         UTILITY
     --------------------------*/
@@ -313,4 +340,18 @@ class UserRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function hardDelete(int $id): bool
+    {
+        $stmt = $this->db->prepare("DELETE FROM users WHERE user_id = ?");
+        return $stmt->execute([$id]);
+    }
+
+    public function hardDeleteMultiple(array $ids): bool
+    {
+        if (empty($ids)) return false;
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+
+        $stmt = $this->db->prepare("DELETE FROM users WHERE user_id IN ($placeholders)");
+        return $stmt->execute($ids);
+    }
 }

@@ -3,14 +3,14 @@
 namespace App\Services;
 
 use App\Repositories\UserRepository;
-use App\Services\TwilioService;
+// use App\Services\TwilioService;
 use App\Repositories\ActivityLogRepository;
 use App\Repositories\LoginAttemptRepository;
 
 
 class AdminService
 {
-    private UserRepository $users;
+    public UserRepository $users;
     private LoginAttemptRepository $loginAttempts;
     private ActivityLogRepository $activityLog;
 
@@ -70,18 +70,34 @@ class AdminService
         ]);
 
         $this->users->assignRoles($userId, $data['roles'] ?? ['student']);
-        $this->activityLog->log($_SESSION['user_id'], "{$_SESSION['name']} Created User", "User {$data['phone']} added");
+        $this->activityLog->log($_SESSION['user_id'], "Created User", "User {$data['phone']} added");
+
+        $subject = "Welcome to Garage & Gate Experts";
+
+        $html = "
+            <p>Hi {$data['first_name']},</p>
+            <p>Your account has been created successfully.</p>
+            <p><strong>Login:</strong> {$data['phone']}<br>
+            <strong>Password:</strong> {$plainPassword}</p>
+            <p>Please change your password after your first login.</p>
+        ";
+
+        $emailSent = true;
 
         try {
-            $sms = new TwilioService();
-            $sms->sendSms(
-                $data['phone'], 
-                "Welcome to CodeWithNigey Academy. \nLogin: {$data['phone']} \nPassword: {$plainPassword}"
-            );
-            return ['type' => 'success', 'message' => 'User created successfully & SMS sent'];
+            $emailService = new \App\Services\SmtpService();
+            $emailService->sendHtml($data['email'], $subject, $html);
+
         } catch (\Throwable $e) {
-            return ['type' => 'warning', 'message' => 'User created but SMS failed'];
+            $emailSent = false;
         }
+
+        if ($emailSent) {
+            return ['type' => 'success', 'message' => 'User created successfully & Email sent'];
+        }
+
+        return ['type' => 'warning', 'message' => 'User created but Email failed'];
+
     }
 
     /* -------------------------
@@ -105,7 +121,7 @@ class AdminService
         ]);
 
         $this->users->updateUserRoles($data['user_id'], $data['roles']);
-        $this->activityLog->log($_SESSION['user_id'], "{$_SESSION['name']} Updated User", "User \"{$data['first_name']} {$data['last_name']}\" Was Updated");
+        $this->activityLog->log($_SESSION['user_id'], "Updated User", "ID: {$data['user_id']}");
 
         return ['type' => 'success', 'message' => 'User updated successfully'];
     }
@@ -120,7 +136,7 @@ class AdminService
         }
 
         $this->users->softDelete($id);
-        $this->activityLog->log($_SESSION['user_id'], "{$_SESSION['name']} Deleted User", "ID: {$id}");
+        $this->activityLog->log($_SESSION['user_id'], "Deleted User", "ID: {$id}");
 
         return ['type' => 'success', 'message' => 'User moved to recycle bin'];
     }
@@ -135,7 +151,7 @@ class AdminService
             return ['type' => 'error', 'message' => 'Delete prevented (admin protection)'];
         }
 
-        $this->activityLog->log($_SESSION['user_id'], "{$_SESSION['name']} Deleted {count($ids)} Users", "IDs: {$ids}");
+        $this->activityLog->log($_SESSION['user_id'], "Moved " . count($ids) . " Users To Recycle Bin", "IDs: " . json_encode($ids));
 
         return ['type' => 'success', 'message' => count($ids) . ' users archived'];
     }
@@ -144,7 +160,7 @@ class AdminService
     {
         $this->users->restore($id);
 
-        $this->activityLog->log($_SESSION['user_id'], "{$_SESSION['name']} Restored Deleted User", "ID: {$id}");
+        $this->activityLog->log($_SESSION['user_id'], "Restored Deleted User", "ID: {$id}");
 
         return ['type' => 'success', 'message' => 'User restored successfully'];
     }
@@ -156,7 +172,7 @@ class AdminService
         }
 
         $this->users->restoreMultiple($ids);
-        $this->activityLog->log($_SESSION['user_id'], "{$_SESSION['name']} Restored {count($ids)} Deleted Users", "IDs: {$ids}");
+        $this->activityLog->log($_SESSION['user_id'], "Restored " . count($ids) . " Deleted Users", "IDs: " . json_encode($ids));
 
         return ['type' => 'success', 'message' => count($ids) . ' users restored'];
     }
@@ -215,10 +231,10 @@ class AdminService
         $date = date('Y-m-d');
 
         if ($format === 'txt') {
-            $this->activityLog->log($_SESSION['user_id'], "{$_SESSION['name']} Exported Users", "Downloaded User Txt");
+            $this->activityLog->log($_SESSION['user_id'], "Exported Users", "Downloaded User Txt");
             ExportService::streamTxt("users_{$date}.txt", $headers, $rows);
         } else {
-            $this->activityLog->log($_SESSION['user_id'], "{$_SESSION['name']} Exported Users", "Downloaded User CSV");
+            $this->activityLog->log($_SESSION['user_id'], "Exported Users", "Downloaded User CSV");
             ExportService::streamCsv("users_{$date}.csv", $headers, $rows);
         }
     }
@@ -260,10 +276,11 @@ class AdminService
         $date = date('Y-m-d');
 
         if ($format === 'txt') {
-            $this->activityLog->log($_SESSION['user_id'], "{$_SESSION['name']} Downloaded User Login Attempts", "Downloaded In TXT format");
+            $this->activityLog->log($_SESSION['user_id'], "Downloaded User Login Attempts", "Downloaded In TXT format");
+            
             ExportService::streamTxt("login_attempts_{$date}.txt", $headers, $rows);
         } else {
-            $this->activityLog->log($_SESSION['user_id'], "{$_SESSION['name']} Downloaded User Login Attempts", "Downloaded In CSV format");
+            $this->activityLog->log($_SESSION['user_id'], "Downloaded User Login Attempts", "Downloaded In CSV format");
             ExportService::streamCsv("login_attempts_{$date}.csv", $headers, $rows);
         }
     }

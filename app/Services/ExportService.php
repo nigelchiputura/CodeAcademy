@@ -7,9 +7,9 @@ class ExportService
     /**
      * Generic CSV streamer.
      *
-     * @param string $filename  e.g. "users_2025-11-30.csv"
-     * @param array  $headers   e.g. ['ID','Username','Roles','Phone']
-     * @param array  $rows      e.g. [[1,'nigey','admin','077...'], ...]
+     * @param string $filename  
+     * @param array  $headers   
+     * @param array  $rows
      */
     public static function streamCsv(string $filename, array $headers, array $rows): void
     {

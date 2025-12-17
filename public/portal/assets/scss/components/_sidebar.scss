@@ -2,8 +2,8 @@
 
 #toggleSidebar {
     position: fixed;
-    bottom: 30px;
-    left: 30px;
+    bottom: 70px;
+    left: 40px;
     z-index: 1001;
     background: $accent;
     border: none;
@@ -30,11 +30,6 @@
     width: 90%;
     margin: auto;
   }
-
-  // &:hover {
-  //   width: 240px;
-  //   .label { opacity: 1; transform: translateX(0); }
-  // }
 
   .logo {
     position: relative;

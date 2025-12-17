@@ -2,43 +2,77 @@
 
 namespace App\Controllers;
 
-use App\Services\ChatbotService;
+use App\Services\ChatbotAdminService;
+use App\Repositories\ChatbotRepository;
+use App\Helpers\Auth;
 
 class ChatbotController
 {
-    private ChatbotService $service;
+    private ChatbotAdminService $service;
+    private ChatbotRepository $repo;
 
     public function __construct()
     {
-        $this->service = new ChatbotService();
+        $this->service = new ChatbotAdminService();
+        $this->repo = new ChatbotRepository();
     }
 
-    public function handle(): void
+    public function index()
     {
-        // Basic JSON endpoint
-        header('Content-Type: application/json; charset=utf-8');
+        outputFlashMessage();
+        $faqs = $this->service->getAll();
+        require __DIR__ . '/../Views/admin/chatbot.php';
+    }
 
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            http_response_code(405);
-            echo json_encode(['error' => 'Method not allowed']);
-            return;
+    public function create()
+    {
+        Auth::requireRole(['admin']);
+
+        $_SESSION['flash_time'] = time();
+        $response = $this->service->create($_POST);
+        $_SESSION[$response['type']] = $response['message'];
+
+        header("Location: /admin/chatbot.php");
+        exit;
+    }
+
+    public function update()
+    {
+        Auth::requireRole(['admin']);
+
+        $id = (int)$_POST['id'] ?? null;
+
+        if (!$id) {
+            $_SESSION['error'] = 'Missing FAQ ID';
+            header("Location: /admin/chatbot.php");
+            exit;
         }
 
-        // Optional: very light CSRF check if you have a token helper
-        session_start();
-        if (
-            empty($_POST['csrf_token']) ||
-            empty($_SESSION['csrf_token']) ||
-            !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
-        ) {
-            http_response_code(403);
-            echo json_encode(['error' => 'Invalid CSRF token']);
-            return;
+        $_SESSION['flash_time'] = time();
+        $response = $this->service->update($_POST);
+        $_SESSION[$response['type']] = $response['message'];
+
+        header("Location: /admin/chatbot.php");
+        exit;
+    }
+
+    public function delete()
+    {
+        Auth::requireRole(['admin']);
+
+        $id = $_POST['id'] ?? null;
+
+        if (!$id) {
+            $_SESSION['error'] = 'Missing FAQ ID';
+            header("Location: /admin/chatbot.php");
+            exit;
         }
+        
+        $_SESSION['flash_time'] = time();
+        $response = $this->service->delete($id);
+        $_SESSION[$response['type']] = $response['message'];
 
-        $message = $_POST['message'] ?? '';
-        $reply = $this->service->reply($message);
-
-        echo json_encode($reply);
+        header("Location: /admin/chatbot.php");
+        exit;
     }
 }

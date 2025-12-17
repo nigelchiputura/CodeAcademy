@@ -1,0 +1,33 @@
+.activity-logs {
+    .log-item {
+        transition: background-color .2s ease;
+
+        &:hover {
+            background-color: #f1f3f5;
+        }
+
+        .fw-bold {
+            font-size: 1rem;
+        }
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+
+    .pagination .page-link {
+        border-radius: 8px;
+        padding: 8px 14px;
+    }
+}
+
+.filter-bar {
+    border-left: 4px solid #0d6efd;
+    background: #f8f9fa;
+    border-radius: 10px;
+
+    .form-label {
+        font-size: .9rem;
+    }
+}

@@ -8,6 +8,7 @@
     <ul>
         <li><a href="#" class="openModalBtn"><i class="fas fa-user-graduate"></i> Student Portal</a></li>
         <li><a href="#" class="openModalBtn"><i class="fas fa-chalkboard-teacher"></i> Teacher Portal</a></li>
+        <!-- <li><a href="#" class="openModalBtn"><i class="fas fa-users"></i> Staff Portal</a></li> -->
         <li><a href="#" class="openModalBtn"><i class="fas fa-users"></i> Parent Portal</a></li>
         <li><a href="./login.php"><i class="fas fa-user-shield"></i> Admin Portal</a></li>
     </ul>

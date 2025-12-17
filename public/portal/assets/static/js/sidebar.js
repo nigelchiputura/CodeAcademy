@@ -1,10 +1,7 @@
 const url = window.location.href;
 // console.log(url);
-const fileName = url
-  .substring(url.lastIndexOf("/") + 1)
-  .slice(0, -4)
-  .replace("_", " ");
-console.log(fileName);
+const fileName = url.substring(url.lastIndexOf("/") + 1).slice(0, -4);
+// console.log(fileName);
 
 const sidebarMenu = document.getElementById("menu");
 const sidebarLinks = sidebarMenu.querySelectorAll("li");

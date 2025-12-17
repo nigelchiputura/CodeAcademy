@@ -18,9 +18,6 @@ class PasswordResetService
         require_once __DIR__ . '/../../functions.php';
     }
 
-    /**
-     * Step 1: request reset (send SMS code)
-     */
     public function requestReset(string $phone): array
     {
         $phone = trim($phone);
@@ -31,7 +28,6 @@ class PasswordResetService
 
         $user = $this->users->findByPhone($phone);
 
-        // Security best practice: do not reveal whether user exists
         if (!$user) {
             return [
                 'type'    => 'success',
@@ -39,36 +35,41 @@ class PasswordResetService
             ];
         }
 
-        // generate 6-digit numeric code
         $code = (string) random_int(100000, 999999);
 
-        // store reset
         $this->resets->createReset($user->id, $code, 15); // 15-minute expiry
 
-        // send SMS
-        try {
-            $twilio = new TwilioService();
-            $twilio->sendSms(
-                $user->phone,
-                "Your CodeWithNigey Academy password reset code is: {$code}. It expires in 15 minutes."
-            );
+        $subject = "Garage And Gate Experts Password Reset!";
 
+        $html = "
+            <p>Your Garage & Gate Experts password reset code is: {$code}. It expires in 15 minutes.</p>
+            <p>Click the link below and enter the code you just received:</p>
+            <a href='https://garagegurus/password-reset'>Reset Password</a>
+        ";
+
+        $emailSent = true;
+
+        try {
+            $emailService = new \App\Services\SmtpService();
+            $emailService->sendHtml($user->email, $subject, $html);
+
+        } catch (\Throwable $e) {
+            $emailSent = false;
+        }
+
+        if ($emailSent) {
             return [
                 'type'    => 'success',
-                'message' => 'If an account exists, a reset code has been sent via SMS.'
-            ];
-        } catch (\Throwable $e) {
-            // still do not leak existence; just say something generic
-            return [
-                'type'    => 'error',
-                'message' => 'Could not send reset code. Please try again later.'
+                'message' => 'If an account exists, a reset code has been sent via Email.'
             ];
         }
+
+        return [
+            'type'    => 'error',
+            'message' => 'Could not send reset code. Please try again later.'
+        ];
     }
 
-    /**
-     * Step 2: verify code & set new password
-     */
     public function resetPassword(string $phone, string $code, string $password, string $confirm): array
     {
         if (inputEmpty($phone, $code, $password, $confirm)) {
@@ -89,7 +90,6 @@ class PasswordResetService
             return ['type' => 'error', 'message' => 'Invalid or expired reset code'];
         }
 
-        // update password
         $hash = password_hash($password, PASSWORD_BCRYPT);
         $ok   = $this->users->updatePassword($user->id, $hash);
 

@@ -9,7 +9,10 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content: space-between;">
+                <h1 class="lead fw-bold ms-3 mt-3 p-2 rounded-pill text-white bg-secondary text-center">Welcome <?= $_SESSION["name"] ?></h1>
+
                 <ul class="navbar-nav mr-auto">
 
                     <li class="nav-item p-2">

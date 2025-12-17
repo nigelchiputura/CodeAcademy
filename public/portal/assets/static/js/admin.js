@@ -1,57 +1,84 @@
-const userModalBtnContainer = document.querySelectorAll(".actions");
+const modalBtnContainer = document.querySelectorAll(".actions");
 
 // Update User Detail Modal
-const userUpdateModal = document.getElementById("editUserModal");
-const userUpdateModalBtns = document.querySelectorAll(".edit-user-detail-btn");
-const userUpdateModalBody = userUpdateModal.querySelector(".modal-body");
+const updateModal = document.getElementById("editModal");
+const updateModalBtns = document.querySelectorAll(".edit-detail-btn");
+const updateModalBody = updateModal.querySelector(".modal-body");
 
 // Delete User Detail Modal
-const userDeleteModal = document.getElementById("deleteUserModal");
-const userDeleteSubmitBtn = userDeleteModal.querySelector("#user-delete-btn");
-const userDeleteModalBody = userDeleteModal.querySelector(".modal-body");
+const deleteModal = document.getElementById("deleteModal");
+const deleteSubmitBtn = deleteModal.querySelector("#delete-detail-btn");
+const deleteModalBody = deleteModal.querySelector(".modal-body");
 
 // View User Detail Modal
-const userDetailModal = document.getElementById("viewUserModal");
-const userDetailModalBtns = document.querySelectorAll(".view-user-detail-btn");
-const userDetailModalBody = userDetailModal.querySelector(".modal-body");
+const detailModal = document.getElementById("viewModal");
+const detailModalBtns = document.querySelectorAll(".view-detail-btn");
+const detailModalBody = detailModal.querySelector(".modal-body");
 
-let userUpdateModalInputFields =
-  userUpdateModalBody.querySelectorAll(".update-field");
+let updateModalInputFields = updateModalBody.querySelectorAll(".update-field");
 
-userModalBtnContainer.forEach((container) => {
-  let userInfo = container.dataset.user_info;
-  let userInfoObject = JSON.parse(userInfo);
+modalBtnContainer.forEach((container) => {
+  let info = container.dataset.info;
+  // console.log(info);
+  let infoObject = JSON.parse(atob(info));
 
-  let userModalBtns = container.querySelectorAll("button");
+  let modalBtns = container.querySelectorAll("button");
 
-  userModalBtns.forEach((btn) => {
+  modalBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       let currentBtn = e.target;
       let btnAction = currentBtn.getAttribute("id");
 
       if (btnAction === "read") {
-        // console.log(userInfoObject);
+        // console.log(infoObject);
 
-        for (let key in userInfoObject) {
+        for (let key in infoObject) {
           // console.log(key);
           let modalListGroup =
-            userDetailModalBody.querySelectorAll(".list-group-item");
+            detailModalBody.querySelectorAll(".list-group-item");
           modalListGroup.forEach((item) => {
             let modalListGroupListItem = item.getAttribute("id");
-            if (modalListGroupListItem === key) {
-              item.querySelector("span").textContent = userInfoObject[key];
+            if (
+              modalListGroupListItem === key &&
+              modalListGroupListItem !== "image"
+            ) {
               // console.log(item.querySelector("span").textContent)
-              console.log(userInfoObject[key]);
+
+              item.querySelector("span").textContent = infoObject[key];
+            }
+            if (
+              modalListGroupListItem === key &&
+              modalListGroupListItem === "image"
+            ) {
+              item
+                .querySelector("img")
+                .setAttribute("src", `/uploads/${infoObject[key]}`);
             }
           });
         }
       } else if (btnAction === "update") {
         // text inputs (first_name, last_name, username, email, phone)
-        userUpdateModalInputFields.forEach((inputField) => {
+        updateModalInputFields.forEach((inputField) => {
           const fieldName = inputField
             .getAttribute("id")
             .replace("-update", "");
-          const value = userInfoObject[fieldName];
+          const value = infoObject[fieldName];
+
+          if (fieldName === "image") {
+            value
+              ? inputField
+                  .querySelector("a")
+                  .setAttribute("href", `/uploads/${value}`)
+              : inputField.querySelector("a").setAttribute("href", "#");
+            value
+              ? (inputField.querySelector("a").textContent = value.replace(
+                  "services/",
+                  ""
+                ))
+              : (inputField.querySelector("a").textContent =
+                  "No Image Has Been Set"),
+              console.log("");
+          }
 
           if (typeof value !== "undefined" && !Array.isArray(value)) {
             inputField.value = value;
@@ -60,24 +87,27 @@ userModalBtnContainer.forEach((container) => {
           if (inputField.getAttribute("id") === "status-update") {
             let selectOptions = inputField.querySelectorAll("option");
             selectOptions.forEach((option) => {
-              if (option.value === userInfoObject["status"]) {
+              if (option.value === infoObject["status"]) {
+                option.selected = true;
+              }
+              if (option.value == infoObject["is_active"]) {
                 option.selected = true;
               }
             });
           }
         });
 
-        // set hidden user_id
-        const hiddenIdInput = document.getElementById("user-id-update");
+        // set hidden id
+        const hiddenIdInput = document.getElementById("id-update");
         if (hiddenIdInput) {
-          hiddenIdInput.value = userInfoObject["id"];
+          hiddenIdInput.value = infoObject["id"];
         }
 
         // roles: tick checkboxes
         const roleCheckboxes =
-          userUpdateModalBody.querySelectorAll(".role-checkbox");
-        const userRoles = Array.isArray(userInfoObject.roles)
-          ? userInfoObject.roles.map((r) => r.toLowerCase())
+          updateModalBody.querySelectorAll(".role-checkbox");
+        const userRoles = Array.isArray(infoObject.roles)
+          ? infoObject.roles.map((r) => r.toLowerCase())
           : [];
 
         roleCheckboxes.forEach((cb) => {
@@ -85,11 +115,22 @@ userModalBtnContainer.forEach((container) => {
         });
       } else if (btnAction === "delete") {
         let confirmationMessage =
-          userDeleteModalBody.querySelector("#confirm-delete");
-        // console.log("DELETE!!!")
-        confirmationMessage.querySelector("strong").textContent =
-          userInfoObject["username"];
-        userDeleteSubmitBtn.setAttribute("value", userInfoObject["id"]);
+          deleteModalBody.querySelector("#confirm-delete");
+        // console.log("DELETE!!!");
+
+        if (infoObject["username"]) {
+          confirmationMessage.querySelector(
+            "strong"
+          ).textContent = `"${infoObject["username"]}"`;
+        } else if (infoObject["title"]) {
+          confirmationMessage.querySelector(
+            "strong"
+          ).textContent = `"${infoObject["title"]}"`;
+        } else {
+          confirmationMessage.querySelector("strong").textContent = "";
+        }
+
+        deleteSubmitBtn.setAttribute("value", infoObject["id"]);
       }
     });
   });
@@ -111,68 +152,20 @@ function showCrudToast(message, type = "success") {
   toast.show();
 }
 
-document.querySelectorAll(".edit-user-detail-btn").forEach((btn) => {
+document.querySelectorAll(".edit-detail-btn").forEach((btn) => {
   btn.addEventListener("click", () =>
     showCrudToast("Editing user details...", "info")
   );
 });
 
-document.querySelectorAll(".delete-user-detail-btn").forEach((btn) => {
+document.querySelectorAll(".delete-detail-btn").forEach((btn) => {
   btn.addEventListener("click", () =>
     showCrudToast("Deleting user!", "danger")
   );
 });
 
-document.querySelectorAll(".view-user-detail-btn").forEach((btn) => {
+document.querySelectorAll(".view-detail-btn").forEach((btn) => {
   btn.addEventListener("click", () =>
     showCrudToast("Viewing user details", "secondary")
   );
-});
-
-const selectAll = document.getElementById("selectAllUsers");
-const userCheckboxes = document.querySelectorAll(".user-checkbox");
-const deleteSelectedBtn = document.getElementById("deleteSelectedBtn");
-const confirmDeleteModal = new bootstrap.Modal(
-  document.getElementById("confirmDeleteModal")
-);
-const selectedCountText = document.getElementById("selectedCount");
-const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-
-function updateDeleteButton() {
-  const selected = document.querySelectorAll(".user-checkbox:checked").length;
-  deleteSelectedBtn.disabled = selected === 0;
-}
-
-selectAll?.addEventListener("change", (e) => {
-  userCheckboxes.forEach((cb) => (cb.checked = e.target.checked));
-  updateDeleteButton();
-});
-
-userCheckboxes.forEach((cb) =>
-  cb.addEventListener("change", updateDeleteButton)
-);
-
-deleteSelectedBtn?.addEventListener("click", () => {
-  const selected = document.querySelectorAll(".user-checkbox:checked").length;
-  selectedCountText.textContent = selected;
-  confirmDeleteModal.show();
-});
-
-confirmDeleteBtn?.addEventListener("click", () => {
-  const selectedIds = Array.from(
-    document.querySelectorAll(".user-checkbox:checked")
-  ).map((cb) => cb.closest("tr").dataset.userId);
-
-  console.log("Deleting users:", selectedIds);
-
-  confirmDeleteModal.hide();
-  showCrudToast(
-    `${selectedIds.length} user(s) deleted successfully!`,
-    "danger"
-  );
-
-  selectedIds.forEach((id) =>
-    document.querySelector(`[data-user-id="${id}"]`)?.remove()
-  );
-  updateDeleteButton();
 });

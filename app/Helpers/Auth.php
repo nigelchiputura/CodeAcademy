@@ -9,7 +9,7 @@ class Auth
     public static function requireLogin()
     {
         if (!isset($_SESSION['user_id'])) {
-            header("Location: /login.php");
+            header("Location: /admin-login");
             exit;
         }
     }
@@ -60,10 +60,8 @@ class Auth
     {
         self::requireLogin();
 
-        // Try session active_role first
         $active = $_SESSION['active_role'] ?? null;
 
-        // Fallback: first role in array if active_role not set
         if ($active === null) {
             $roles = $_SESSION['roles'] ?? [];
             $active = $roles[0] ?? null;
@@ -88,13 +86,11 @@ class Auth
                 break;
 
             case 'auditor':
-                // auditor can see everything - best home is an overview/admin view
                 header('Location: /admin/dashboard.php');
                 break;
 
             default:
-                // Fallback if something is weird
-                header('Location: /index.php');
+                header('Location: /');
         }
 
         exit;

@@ -1,0 +1,7 @@
+# Prevent script execution
+<FilesMatch "\.(php|php5|php7|phtml)$">
+    Deny from all
+</FilesMatch>
+
+# No directory browsing
+Options -Indexes

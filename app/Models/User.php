@@ -19,8 +19,8 @@ class User
     public string $first_name;
     public string $last_name;
 
-    // roles (multi-role support)
-    public array $roles = []; // ['admin','teacher']
+    // roles
+    public array $roles = [];
 
     // lifecycle & status
     public string $status = 'pending_verification';

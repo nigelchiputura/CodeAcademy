@@ -34,7 +34,7 @@
     <ul class="menu" id="menu">
 
         <li id="dashboard" class="active">
-            <a href="./dashboard.php">
+            <a href="/admin/dashboard.php">
                 <i class="fas fa-tachometer-alt"></i>
                 <span class="label">Dashboard</span>
             </a>
@@ -43,51 +43,72 @@
         <hr>
         
         <li id="users">
-            <a href="./users.php">
-                <i class="fas fa-user"></i>
-                <span class="label">Users</span>
+            <a href="/admin/users.php">
+                <i class="fas fa-shield-alt"></i>
+                <span class="label">Security</span>
             </a>
         </li>
 
-        <li class="label" data-bs-toggle="modal" data-bs-target="#wipModal" id="courses">
+        <li class="label" data-bs-toggle="modal" data-bs-target="#wipModal">
             <a href="#">
-                <i class="fas fa-book"></i>
-                <span >Courses</span>
+                <i class="fas fa-users"></i>
+                <span class="label">Staff Members</span>
+            </a>
+        </li>
+
+        <li class="label" data-bs-toggle="modal" data-bs-target="#wipModal">
+            <a href="#">
+                <i class="fas fa-user-graduate"></i>
+                <span >Students</span>
             </a>
         </li>
         
-        <li class="label" data-bs-toggle="modal" data-bs-target="#wipModal" id="teachers">
+        <li class="label" data-bs-toggle="modal" data-bs-target="#wipModal">
             <a href="#">
                 <i class="fas fa-chalkboard-teacher"></i>
                 <span >Teachers</span>
             </a>
         </li>
 
-        <li class="label" data-bs-toggle="modal" data-bs-target="#wipModal" id="students">
+        <!-- <li class="label" data-bs-toggle="modal" data-bs-target="#wipModal">
             <a href="#">
-                <i class="fas fa-user-graduate"></i>
-                <span >Students</span>
+                <i class="fas fa-users"></i>
+                <span class="label">Parents</span>
+            </a>
+        </li> -->
+
+        <li class="label" data-bs-toggle="modal" data-bs-target="#wipModal">
+            <a href="#">
+                <i class="fas fa-book"></i>
+                <span >Courses</span>
             </a>
         </li>
-
-        <li class="label" data-bs-toggle="modal" data-bs-target="#wipModal" id="payments">
+        
+        <li class="label" data-bs-toggle="modal" data-bs-target="#wipModal">
             <a href="#">
                 <i class="fas fa-credit-card"></i>
                 <span >Payments</span>
             </a>
         </li>
-
-        <li class="label" data-bs-toggle="modal" data-bs-target="#wipModal" id="anouncements">
+        
+        <li class="label" data-bs-toggle="modal" data-bs-target="#wipModal">
             <a href="#">
                 <i class="fas fa-bullhorn"></i>
                 <span >Anouncements</span>
             </a>
         </li>
+        
+        <li class="label" data-bs-toggle="modal" id="chatbot">
+            <a href="/admin/chatbot.php">
+                <i class="fas fa-question"></i>
+                <span >Chatbot FAQ</span>
+            </a>
+        </li>
 
         <hr>
 
-        <li class="label" data-bs-toggle="modal" data-bs-target="#wipModal" id="anouncements">
-            <a href="#">
+        <li class="label" data-bs-toggle="modal" id="activity_log">
+            <a href="/admin/activity_log.php">
                 <i class="fas fa-history"></i>
                 <span >Activity Logs</span>
             </a>

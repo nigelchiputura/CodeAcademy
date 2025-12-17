@@ -16,7 +16,6 @@ class PasswordResetRepository
 
     public function createReset(int $userId, string $code, int $ttlMinutes = 15): void
     {
-        // Optional: mark old tokens as used
         $this->db->prepare("
             UPDATE password_resets 
             SET used = 1 
@@ -30,7 +29,7 @@ class PasswordResetRepository
 
         $stmt->execute([
             ':user_id'     => $userId,
-            ':reset_token' => $code,       // plain code for now
+            ':reset_token' => $code,
             ':ttl'         => $ttlMinutes,
         ]);
     }

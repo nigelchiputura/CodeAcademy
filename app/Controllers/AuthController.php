@@ -33,7 +33,7 @@ class AuthController
 
         if (isset($response['error'])) {
             $_SESSION['error'] = $response['error'];
-            header("Location: /login.php");
+            header("Location: /admin-login");
             exit;
         }
 
@@ -94,7 +94,7 @@ class AuthController
         $response = $this->passwordResets->requestReset($_POST['phone'] ?? '');
 
         $_SESSION[$response['type']] = $response['message'];
-        header("Location: /forgot_password.php");
+        header("Location: /forgot-password.php");
         exit;
     }
 
@@ -117,10 +117,10 @@ class AuthController
 
         if ($response['type'] === 'success') {
             $_SESSION['success'] = $response['message'];
-            header("Location: /login.php");
+            header("Location: /admin-login");
         } else {
             $_SESSION['error'] = $response['message'];
-            header("Location: /reset_password.php");
+            header("Location: /reset-password");
         }
         exit;
     }

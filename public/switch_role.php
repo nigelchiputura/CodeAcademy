@@ -7,7 +7,7 @@ use App\Helpers\Auth;
 Auth::requireLogin();
 
 if (!isset($_GET['role'])) {
-    header('Location: /public/index.php');
+    header('Location: /');
     exit;
 }
 

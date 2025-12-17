@@ -24,7 +24,7 @@ class LoginAttemptRepository
         $stmt->execute([
             ':user_id'         => $userId,
             ':phone_attempted' => $phoneAttempted,
-            ':reason'          => $reason,   // must be one of: wrong_password, otp_failed, account_locked, success
+            ':reason'          => $reason,
             ':ip_address'      => $ipAddress,
             ':success'         => $success ? 1 : 0,
         ]);
@@ -68,17 +68,17 @@ class LoginAttemptRepository
 
         if (!empty($filters['reason'])) {
             $sql .= " AND la.reason = :reason";
-            $params[':reason'] = $filters['reason']; // wrong_password, success, etc.
+            $params[':reason'] = $filters['reason'];
         }
 
         if (!empty($filters['from'])) {
             $sql .= " AND la.attempted_at >= :from";
-            $params[':from'] = $filters['from']; // 'YYYY-MM-DD'
+            $params[':from'] = $filters['from'];
         }
 
         if (!empty($filters['to'])) {
             $sql .= " AND la.attempted_at <= :to";
-            $params[':to'] = $filters['to']; // 'YYYY-MM-DD'
+            $params[':to'] = $filters['to'];
         }
 
         $sql .= " ORDER BY la.attempted_at DESC";

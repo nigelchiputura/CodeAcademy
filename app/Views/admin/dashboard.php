@@ -5,116 +5,117 @@
     <?php include __DIR__ . '/partials/sidebar.php'; ?>
 
     <main>
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1 class="display-6 m-0">Welcome <?= $_SESSION["name"] ?></h1>
+
+        <!-- HEADER -->
+        <div class="dashboard-header">
+            <div>
+                <h1 class="display-6">Welcome <?= htmlspecialchars($_SESSION["name"]) ?></h1>
+                <small class="text-muted">Admin Dashboard</small>
+            </div>
+
+            <button
+                class="btn btn-outline-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#logoutModal"
+            >
+                <i class="fas fa-power-off me-2"></i> Logout
+            </button>
         </div>
-        <hr>
-        
-        <div class="stats-container mb-5">
+
+        <!-- QUICK ACTIONS -->
+        <div class="quick-actions">
+            <a href="./users.php" class="btn btn-primary btn-sm">
+                <i class="fas fa-user-plus"></i> Add User
+            </a>
+
+            <a href="./activity_log.php" class="btn btn-outline-secondary btn-sm">
+                <i class="fas fa-history"></i> View Logs
+            </a>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-container">
             <div class="row g-4">
-                <div class="col-md-3 col-sm-6">
-                    <div class="stat-card shadow-sm p-4 rounded fade-in">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <h2 class="fw-bold mb-0 text-primary">
-                                    <?= count($users); ?>
-                                </h2>
-                                <small class="text-muted">Total Users</small>
-                            </div>
-                            <i class="fas fa-users fa-2x text-primary"></i>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-3 col-sm-6">
-                    <div class="stat-card shadow-sm p-4 rounded fade-in">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <h2 class="fw-bold mb-0 text-success">
-                                    <?= rand(30, 150);?>
-                                </h2>
-                                <small class="text-muted">Total Students</small>
-                            </div>
-                            <i class="fas fa-user-graduate fa-2x text-success"></i>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                $primaryStats = [
+                    ['label'=>'Users','count'=>count($users),'icon'=>'users','color'=>'primary'],
+                    ['label'=>'Students','count'=>78,'icon'=>'user-graduate','color'=>'success'],
+                    ['label'=>'Teachers','count'=>98,'icon'=>'chalkboard-teacher','color'=>'info'],
+                    ['label'=>'Payments','count'=>238,'icon'=>'credit-card','color'=>'warning'],
+                ];
+                ?>
 
-                <div class="col-md-3 col-sm-6">
-                    <div class="stat-card shadow-sm p-4 rounded fade-in">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <h2 class="fw-bold mb-0 text-info">
-                                    <?php echo rand(5, 30); ?>
-                                </h2>
-                                <small class="text-muted">Total Courses</small>
+                <?php foreach ($primaryStats as $stat): ?>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="stat-card">
+                            <div class="stat-content">
+                                <div>
+                                    <h2 class="text-<?= $stat['color'] ?>">
+                                        <?= $stat['count'] ?>
+                                    </h2>
+                                    <span><?= $stat['label'] ?></span>
+                                </div>
+                                <i class="fas fa-<?= $stat['icon'] ?> text-<?= $stat['color'] ?>"></i>
                             </div>
-                            <i class="fas fa-book fa-2x text-info"></i>
                         </div>
                     </div>
-                </div>
+                <?php endforeach; ?>
 
-                <div class="col-md-3 col-sm-6">
-                    <div class="stat-card shadow-sm p-4 rounded fade-in">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <h2 class="fw-bold mb-0 text-warning">
-                                    <?php echo rand(200, 500); ?>
-                                </h2>
-                                <small class="text-muted">Payments Recorded</small>
-                            </div>
-                            <i class="fas fa-credit-card fa-2x text-warning"></i>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            
-            <h4>Modules</h4>
+        <!-- MODULES -->
+        <h4 class="section-title">Modules</h4>
+
+        <div class="modules-grid">
+
+            <a href="./users.php" class="module-tile">
+                <i class="fas fa-user-shield"></i>
+                <span>Users</span>
+            </a>
+
+            <a href="#" data-bs-toggle="modal" data-bs-target="#wipModal" class="module-tile">
+                <i class="fas fa-user-graduate"></i>
+                <span>Students</span>
+            </a>
+
+            <a href="#" data-bs-toggle="modal" data-bs-target="#wipModal" class="module-tile">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>Teachers</span>
+            </a>
+
+            <a href="#" data-bs-toggle="modal" data-bs-target="#wipModal" class="module-tile">
+                <i class="fas fa-book"></i>
+                <span>Courses</span>
+            </a>
+
+            <a href="#" data-bs-toggle="modal" data-bs-target="#wipModal" class="module-tile">
+                <i class="fas fa-credit-card"></i>
+                <span>Payments</span>
+            </a>
+
+            <a href="./chatbot.php" class="module-tile">
+                <i class="fas fa-question"></i>
+                <span>Chatbot FAQ</span>
+            </a>
 
         </div>
 
-        <div class="dash-link-container mb-5">
-            
-                <a class="dash-link p-4" href="./users.php">
-                    <i class="fas fa-user"></i>
-                    <hr>
-                    Manage Users
-                </a>
-                <a class="dash-link p-4" href="./courses.php">
-                    <i class="fas fa-book"></i>
-                    <hr>
-                    Manage Courses
-                </a>
-                <a class="dash-link p-4" href="./students.php">
-                    <i class="fas fa-user-graduate"></i>
-                    <hr>
-                    Manage Students
-                </a>
-                <a class="dash-link p-4" href="./payments.php">
-                    <i class="fas fa-credit-card"></i>
-                    <hr>
-                    Manage Payments
-                </a>
+        <!-- RECENT ACTIVITY -->
+        <div class="recent-activity">
+            <h4 class="section-title">Recent Activity</h4>
 
-        </div>
-
-        <hr>
-
-        <div class="mt-5">
-            <h4>Recent Activity</h4>
-            <div class="card shadow-sm p-3">
+            <div class="card activity-card">
                 <?php if (empty($recent)): ?>
-                    <p class="text-muted mb-0 text-center">No recent actions</p>
+                    <p class="text-muted text-center mb-0">No recent actions</p>
                 <?php else: ?>
                     <ul class="list-group list-group-flush">
                         <?php foreach ($recent as $log): ?>
-                            <li class="list-group-item text-secondary">
+                            <li class="list-group-item">
                                 <strong><?= htmlspecialchars($log['action']) ?></strong>
                                 — <?= htmlspecialchars($log['details'] ?? '') ?>
-                                <span class="text-muted float-end small">
+                                <span class="timestamp">
                                     <?= date("d M Y H:i", strtotime($log['created_at'])) ?>
                                 </span>
                             </li>

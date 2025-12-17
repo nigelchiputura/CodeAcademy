@@ -20,19 +20,19 @@
             </thead>
             <tbody>
                 <?php foreach ($users as $user): ?>
-                    <tr data-user-id="<?= htmlspecialchars($user['id']); ?>">
+                    <tr data-user-id="<?= htmlspecialchars($user->id); ?>">
                         
                         <?php if (!in_array('auditor', $_SESSION['roles'])): ?>
                         <td>
                             <input type="checkbox" class="user-checkbox"
-                                   name="user_ids[]" value="<?= htmlspecialchars($user['id']); ?>">
+                                   name="user_ids[]" value="<?= htmlspecialchars($user->id); ?>">
                         </td>
                         <?php endif; ?>
 
-                        <td><?= htmlspecialchars($user['username'] ?? $user['phone']); ?></td>
+                        <td><?= htmlspecialchars($user->username ?? $user->phone); ?></td>
                         <td>
-                            <?php if (!empty($user['roles'])): ?>
-                                <?php foreach ($user['roles'] as $role): ?>
+                            <?php if (!empty($user->roles)): ?>
+                                <?php foreach ($user->roles as $role): ?>
                                     <span class="badge bg-primary me-1">
                                         <?= htmlspecialchars(ucfirst($role)); ?>
                                     </span>
@@ -41,33 +41,31 @@
                                 <span class="text-muted">No role</span>
                             <?php endif; ?>
                         </td>
-                        <td><?= htmlspecialchars($user['phone']); ?></td>
+                        <td><?= htmlspecialchars($user->phone); ?></td>
                         <td>
-                            <span class="badge bg-<?php echo $user['status'] === 'active' ? 'success' : ($user['status'] === 'disabled' ? 'secondary' : ($user['status'] === 'locked' ? 'danger' : 'warning')); ?>">
-                                <?= htmlspecialchars($user['status']) ?>
+                            <span class="badge bg-<?php echo $user->status === 'active' ? 'success' : ($user->status === 'disabled' ? 'secondary' : ($user->status === 'locked' ? 'danger' : 'warning')); ?>">
+                                <?= htmlspecialchars($user->status) ?>
                             </span>
                         </td>
 
-                        <?php $userJsonData = json_encode($user); ?>
-                        
                         <td class="actions text-center btn-group btn-group-sm"
                             role="group"
-                            data-user_info='<?= $userJsonData ?>'>
+                            data-info='<?= base64_encode(json_encode($user)); ?>'>
 
                             <?php if (!in_array('auditor', $_SESSION['roles'])): ?>
 
                             <button type="button"
-                                    class="btn btn-sm btn-primary edit-user-detail-btn"
+                                    class="btn btn-sm btn-primary edit-detail-btn"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#editUserModal"
+                                    data-bs-target="#editModal"
                                     id="update">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
 
                             <button type="button"
-                                    class="btn btn-sm btn-danger delete-user-detail-btn"
+                                    class="btn btn-sm btn-danger delete-detail-btn"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#deleteUserModal"
+                                    data-bs-target="#deleteModal"
                                     id="delete">
                                 <i class="fas fa-trash"></i> Delete
                             </button>
@@ -75,9 +73,9 @@
                             <?php endif; ?>
 
                             <button type="button"
-                                    class="btn btn-sm btn-info text-white view-user-detail-btn"
+                                    class="btn btn-sm btn-info text-white view-detail-btn"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#viewUserModal"
+                                    data-bs-target="#viewModal"
                                     id="read">
                                 <i class="fas fa-eye"></i> View
                             </button>

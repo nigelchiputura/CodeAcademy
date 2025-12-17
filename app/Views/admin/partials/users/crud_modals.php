@@ -2,14 +2,14 @@
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
+            <div class="modal-header bg-success text-white">
                 <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <!-- hits public/admin/add_user.php -> AdminController::addUser -->
-                <form action="users/add.php" method="post">
+                <form action="/admin/users/add.php" method="post">
 
                     <?php csrf_field(); ?>
 
@@ -50,21 +50,13 @@
                                 Auditor
                             </label>
                             <label>
-                                <input type="checkbox" name="roles[]" value="teacher">
-                                Teacher
-                            </label>
-                            <label>
-                                <input type="checkbox" name="roles[]" value="parent">
-                                Parent
-                            </label>
-                            <label>
-                                <input type="checkbox" name="roles[]" value="student" checked>
-                                Student
+                                <input type="checkbox" name="roles[]" value="client">
+                                Client
                             </label>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100">Save User</button>
+                    <button type="submit" class="btn btn-success w-100">Save User</button>
                 </form>
             </div>
         </div>
@@ -72,7 +64,7 @@
 </div>
 
 <!-- EDIT USER MODAL -->
-<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
@@ -82,12 +74,12 @@
             </div>
             <div class="modal-body">
                 <!-- hits public/admin/update_user.php -> AdminController::updateUser -->
-                <form action="users/update.php" method="post">
+                <form action="/admin/users/update.php" method="post">
 
                     <?php csrf_field(); ?>
 
                     <!-- hidden id field updated by JS -->
-                    <input type="hidden" name="user_id" id="user-id-update">
+                    <input type="hidden" name="user_id" id="id-update">
 
                     <div class="mb-3">
                         <label class="form-label">First Name</label>
@@ -131,16 +123,8 @@
                                 Auditor
                             </label>
                             <label>
-                                <input type="checkbox" class="role-checkbox" value="teacher" name="roles[]">
-                                Teacher
-                            </label>
-                            <label>
-                                <input type="checkbox" class="role-checkbox" value="parent" name="roles[]">
-                                Parent
-                            </label>
-                            <label>
-                                <input type="checkbox" class="role-checkbox" value="student" name="roles[]">
-                                Student
+                                <input type="checkbox" class="role-checkbox" value="client" name="roles[]">
+                                Client
                             </label>
                         </div>
                     </div>
@@ -163,7 +147,7 @@
 </div>
 
 <!-- DELETE USER MODAL -->
-<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel"
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteUserModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -175,13 +159,13 @@
             <div class="modal-body">
                 <p id="confirm-delete">Are you sure you want to delete <strong></strong>?</p>
                 <!-- hits public/admin/delete_user.php -> AdminController::deleteUser -->
-                <form action="users/delete.php" method="post">
+                <form action="/admin/users/delete.php" method="post">
 
                     <?php csrf_field(); ?>
 
                     <div class="d-flex justify-content-end gap-2">
                         <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>
-                        <button class="btn btn-danger" id="user-delete-btn"
+                        <button class="btn btn-danger" id="delete-detail-btn"
                                 type="submit" name="user_id" value="">
                             Delete
                         </button>
@@ -193,7 +177,7 @@
 </div>
 
 <!-- VIEW USER MODAL -->
-<div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
@@ -203,6 +187,7 @@
             </div>
             <div class="modal-body">
                 <ul class="list-group">
+                    <li class="list-group-item" id="id"><strong>User ID:</strong> <span class="user-detail"></span></li>
                     <li class="list-group-item" id="username"><strong>Username:</strong> <span class="user-detail"></span></li>
                     <li class="list-group-item" id="roles"><strong>Roles:</strong> <span class="user-detail"></span></li>
                     <li class="list-group-item" id="email"><strong>Email:</strong> <span class="user-detail"></span></li>
